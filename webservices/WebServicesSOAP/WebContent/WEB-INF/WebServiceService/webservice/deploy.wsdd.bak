@@ -1,0 +1,73 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from WebServiceService WSDL service -->
+
+  <service name="WebService" provider="java:RPC" style="rpc" use="encoded">
+      <parameter name="wsdlTargetNamespace" value="http://webservice"/>
+      <parameter name="wsdlServiceElement" value="WebServiceService"/>
+      <parameter name="schemaUnqualified" value="http://webservice,http://bean"/>
+      <parameter name="wsdlServicePort" value="WebService"/>
+      <parameter name="className" value="webservice.WebServiceSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="WebService"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="getAllMessages" qname="operNS:getAllMessages" xmlns:operNS="http://webservice" returnQName="getAllMessagesReturn" returnType="rtns:ArrayOf_tns1_Message" xmlns:rtns="http://webservice" returnItemType="tns2:Message" xmlns:tns2="http://bean" soapAction="" >
+        <parameter qname="auteur" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="hello" qname="operNS:hello" xmlns:operNS="http://webservice" returnQName="helloReturn" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+      </operation>
+      <operation name="deleteUser" qname="operNS:deleteUser" xmlns:operNS="http://webservice" soapAction="" >
+        <parameter qname="id" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="addUser" qname="operNS:addUser" xmlns:operNS="http://webservice" soapAction="" >
+        <parameter qname="name" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getMessagesSince" qname="operNS:getMessagesSince" xmlns:operNS="http://webservice" returnQName="getMessagesSinceReturn" returnType="rtns:ArrayOf_tns1_Message" xmlns:rtns="http://webservice" returnItemType="tns2:Message" xmlns:tns2="http://bean" soapAction="" >
+        <parameter qname="date" type="tns:dateTime" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="auteur" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="listUsers" qname="operNS:listUsers" xmlns:operNS="http://webservice" returnQName="listUsersReturn" returnType="rtns:ArrayOf_tns1_User" xmlns:rtns="http://webservice" returnItemType="tns2:User" xmlns:tns2="http://bean" soapAction="" >
+      </operation>
+      <parameter name="allowedMethods" value="getAllMessages addUser listUsers deleteUser hello getMessagesSince"/>
+
+      <typeMapping
+        xmlns:ns="http://bean"
+        qname="ns:Message"
+        type="java:bean.Message"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="http://webservice"
+        qname="ns:ArrayOf_tns1_Message"
+        type="java:bean.Message[]"
+        innerType="cmp-ns:Message" xmlns:cmp-ns="http://bean"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <typeMapping
+        xmlns:ns="http://bean"
+        qname="ns:User"
+        type="java:bean.User"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+      <arrayMapping
+        xmlns:ns="http://webservice"
+        qname="ns:ArrayOf_tns1_User"
+        type="java:bean.User[]"
+        innerType="cmp-ns:User" xmlns:cmp-ns="http://bean"
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+      />
+  </service>
+</deployment>

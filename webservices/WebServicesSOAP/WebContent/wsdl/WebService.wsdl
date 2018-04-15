@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://webservice" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://webservice" xmlns:intf="http://webservice" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns1="http://bean" xmlns:tns2="http://sql.java" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema targetNamespace="http://bean" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://sql.java"/>
+   <import namespace="http://webservice"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="Message">
+    <sequence>
+     <element name="auteur" type="xsd:int"/>
+     <element name="date" nillable="true" type="xsd:anyType"/>
+     <element name="id" type="xsd:int"/>
+     <element name="text" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="User">
+    <sequence>
+     <element name="id" type="xsd:int"/>
+     <element name="name" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+  <schema targetNamespace="http://webservice" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://sql.java"/>
+   <import namespace="http://bean"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="ArrayOf_tns1_Message">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:Message[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns1_User">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:User[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="deleteUserRequest">
+
+      <wsdl:part name="id" type="xsd:int">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getMessagesSinceRequest">
+
+      <wsdl:part name="date" type="xsd:dateTime">
+
+      </wsdl:part>
+
+      <wsdl:part name="auteur" type="xsd:int">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="listUsersResponse">
+
+      <wsdl:part name="listUsersReturn" type="impl:ArrayOf_tns1_User">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addUserRequest">
+
+      <wsdl:part name="name" type="xsd:string">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getMessagesSinceResponse">
+
+      <wsdl:part name="getMessagesSinceReturn" type="impl:ArrayOf_tns1_Message">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllMessagesResponse">
+
+      <wsdl:part name="getAllMessagesReturn" type="impl:ArrayOf_tns1_Message">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="helloResponse">
+
+      <wsdl:part name="helloReturn" type="xsd:string">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="helloRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="listUsersRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllMessagesRequest">
+
+      <wsdl:part name="auteur" type="xsd:int">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addUserResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteUserResponse">
+
+   </wsdl:message>
+
+   <wsdl:portType name="WebService">
+
+      <wsdl:operation name="getAllMessages" parameterOrder="auteur">
+
+         <wsdl:input message="impl:getAllMessagesRequest" name="getAllMessagesRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getAllMessagesResponse" name="getAllMessagesResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="hello">
+
+         <wsdl:input message="impl:helloRequest" name="helloRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:helloResponse" name="helloResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteUser" parameterOrder="id">
+
+         <wsdl:input message="impl:deleteUserRequest" name="deleteUserRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:deleteUserResponse" name="deleteUserResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addUser" parameterOrder="name">
+
+         <wsdl:input message="impl:addUserRequest" name="addUserRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:addUserResponse" name="addUserResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getMessagesSince" parameterOrder="date auteur">
+
+         <wsdl:input message="impl:getMessagesSinceRequest" name="getMessagesSinceRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getMessagesSinceResponse" name="getMessagesSinceResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listUsers">
+
+         <wsdl:input message="impl:listUsersRequest" name="listUsersRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:listUsersResponse" name="listUsersResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="WebServiceSoapBinding" type="impl:WebService">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getAllMessages">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllMessagesRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllMessagesResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="hello">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="helloRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="helloResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteUser">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="deleteUserRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="deleteUserResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addUser">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addUserRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addUserResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getMessagesSince">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getMessagesSinceRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getMessagesSinceResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listUsers">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listUsersRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listUsersResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservice" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="WebServiceService">
+
+      <wsdl:port binding="impl:WebServiceSoapBinding" name="WebService">
+
+         <wsdlsoap:address location="http://localhost:8080/WebServicesSOAP/services/WebService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
